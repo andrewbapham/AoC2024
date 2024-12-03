@@ -50,6 +50,32 @@ func part1() {
 
 }
 
+func part2() {
+  file, _ := os.Open("input.txt")
+  defer file.Close()
+
+  scanner := bufio.NewScanner(file)
+  left_list := make([]int, 0, 100)
+  right_counts := make(map[int]int)
+  for scanner.Scan(){
+    line := scanner.Text()
+
+		nums := strings.Split(line, "   ")
+		left_num, _ := strconv.Atoi(nums[0])
+		right_num, _ := strconv.Atoi(nums[1])
+		left_list = append(left_list, left_num)
+    right_counts[right_num] += 1
+  }
+
+  total := 0
+  for _, x := range left_list {
+    total += right_counts[x] * x
+  }
+
+  fmt.Println("Answer for part 2:", total)
+}
+
 func main() {
 	part1()
+  part2()
 }
