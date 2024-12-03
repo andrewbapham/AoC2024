@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func getLines(filepath string) ([]string, error) {
+func GetLines(filepath string) ([]string, error) {
 	lines := make([]string, 0, 100)
 	file, err := os.Open(filepath)
 	if err != nil {
