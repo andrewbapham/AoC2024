@@ -27,3 +27,10 @@ func Map[T, V any](ts []T, fn func(T) V) []V {
   }
   return res
 }
+
+func AbsInt(x int) int {
+  if x < 0 {
+    return -x
+  }
+  return x
+}
