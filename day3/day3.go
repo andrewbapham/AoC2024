@@ -21,12 +21,12 @@ type Range struct {
 type RangeSlice []Range
 
 func (arr RangeSlice) covers(i int) bool {
-  for _, r := range arr {
-    if r.Start <= i && i <= r.End{
-      return true
-    }
-  }
-  return false
+	for _, r := range arr {
+		if r.Start <= i && i <= r.End {
+			return true
+		}
+	}
+	return false
 }
 
 type MulMatch struct {
@@ -81,21 +81,20 @@ func getMulMatches(input_text string) []MulMatch {
 	mul_re := regexp.MustCompile(mul_regex)
 
 	matches := mul_re.FindAllSubmatchIndex([]byte(input_text), -1)
-  mul_matches := make([]MulMatch, 0)
+	mul_matches := make([]MulMatch, 0)
 	for _, match := range matches {
 		nums_as_strings := make([]string, 2)
 		nums_as_strings[0] = input_text[match[2]:match[3]]
 		nums_as_strings[1] = input_text[match[4]:match[5]]
 		num1, _ := strconv.Atoi(nums_as_strings[0])
 		num2, _ := strconv.Atoi(nums_as_strings[1])
-    mul := MulMatch{
-      Value: num1 * num2,
-      Index: match[0],
-    }
-    mul_matches = append(mul_matches, mul)
+		mul := MulMatch{
+			Value: num1 * num2,
+			Index: match[0],
+		}
+		mul_matches = append(mul_matches, mul)
 	}
 	return mul_matches
-
 }
 
 func part1() {
@@ -105,12 +104,12 @@ func part1() {
 		return
 	}
 
-  mul_matches := getMulMatches(string(input_text))
-  total := 0
-  for _, mul := range mul_matches {
-    total += mul.Value
-  }
-  fmt.Println("Part 1 total: ", total)
+	mul_matches := getMulMatches(string(input_text))
+	total := 0
+	for _, mul := range mul_matches {
+		total += mul.Value
+	}
+	fmt.Println("Part 1 total: ", total)
 }
 
 func part2() {
@@ -120,18 +119,17 @@ func part2() {
 		return
 	}
 
-	// mul_re := regexp.MustCompile(mul_regex)
 	acceptable_ranges := getAcceptableRanges(string(input_text))
-  mul_matches := getMulMatches(string(input_text))
+	mul_matches := getMulMatches(string(input_text))
 
-  total := 0
-  for _, mul := range mul_matches {
-    if acceptable_ranges.covers(mul.Index){
-      total += mul.Value
-    }
-  }
+	total := 0
+	for _, mul := range mul_matches {
+		if acceptable_ranges.covers(mul.Index) {
+			total += mul.Value
+		}
+	}
 
-  fmt.Println("Part 2 total: ", total)
+	fmt.Println("Part 2 total: ", total)
 }
 
 func main() {
