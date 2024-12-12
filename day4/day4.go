@@ -19,14 +19,14 @@ var (
 		{X: -1, Y: 0},  // Left
 		{X: 0, Y: 1},   // Up
 		{X: 0, Y: -1},  // Down
-		{X: 1, Y: 1},   // Up Right
-		{X: 1, Y: -1},  // Down Right
-		{X: -1, Y: 1},  // Up Left
-		{X: -1, Y: -1}, // Down Left
+		{X: 1, Y: 1},   // Down Right
+		{X: 1, Y: -1},  // Up Right
+		{X: -1, Y: 1},  // Down Left
+		{X: -1, Y: -1}, // Up Left
 	}
 )
 
-func searchWord(grid []string, word string, index int, dir Direction, pos *Direction) bool {
+func searchWord(grid []string, word string, index int, dir Direction, pos Direction) bool {
 	if index == len(word) {
 		// search complete
 		return true
@@ -72,7 +72,7 @@ func part1Concurrent() {
 				go func() {
 					defer wg.Done()
 					pos := Direction{X: j, Y: i}
-					if searchWord(lines, "XMAS", 0, dir, &pos) {
+					if searchWord(lines, "XMAS", 0, dir, pos) {
             mu.Lock()
 						count++
             mu.Unlock()
@@ -94,7 +94,7 @@ func part1() {
 		for j := range lines[i] {
 			for _, dir := range directions {
 				pos := Direction{X: j, Y: i}
-				if searchWord(lines, "XMAS", 0, dir, &pos) {
+				if searchWord(lines, "XMAS", 0, dir, pos) {
 					count++
 				}
 			}
@@ -107,10 +107,10 @@ func main() {
   start := time.Now()
 	part1()
   elapsed := time.Since(start)
-  fmt.Println("Non-concurrent ran in ", elapsed)
+  fmt.Println("Part 1 ran in", elapsed)
 
   start = time.Now()
-  part1Concurrent()
+  part2()
   elapsed = time.Since(start)
-  fmt.Println("Non-concurrent ran in ", elapsed)
+  fmt.Println("Part 2 ran in", elapsed)
 }
